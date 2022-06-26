@@ -11,3 +11,7 @@ To install, the user must install necessary npm packages through `npm install` a
 ## Usage
 
 This is a video is a demo of the steps to set up and test each route through Insomnia:
+
+
+https://user-images.githubusercontent.com/81279037/175836872-3fa29ac5-1cd7-4a79-8d02-40687981cbaa.mp4
+
