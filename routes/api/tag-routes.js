@@ -13,11 +13,10 @@ router.get('/', async (req, res) => {
         attributes: ['product_name']
       }
     ],
+  }).catch((err) => {
+    res.json(err);
   });
-  res.json(allTags).catch(err => {
-    console.log(err);
-    res.status(500).json(err);
-  })
+  res.json(allTags);
 });
 
 router.get('/:id', async (req, res) => {
@@ -33,24 +32,21 @@ router.get('/:id', async (req, res) => {
         attributes: ['product_name']
       }
     ],
+  }).catch((err) => {
+    res.json(err);
   });
-  res.json(tagById).catch(err => {
-    console.log(err);
-    res.status(500).json(err);
-  })
+  res.json(tagById);
 });
-
 router.post('/', async (req, res) => {
   // create a new tag
   const newTag = await Tag.create(
     {
       tag_name: req.body.tag_name,
     }
-  ).then(res.json(newTag))
-   .catch(err => {
-     console.log(err);
-     res.status(500).json(err);
-   })
+  ).catch((err) => {
+    res.json(err);
+  });
+  res.json(newTag);
 });
 
 router.put('/:id', (req, res) => {

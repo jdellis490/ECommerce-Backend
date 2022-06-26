@@ -18,11 +18,9 @@ router.get('/', async (req, res) => {
         attributes:['tag_name']
       }
     ],
-  }); 
-  res.json(allProducts).catch(err => {
-    console.log(err);
-    res.status(500).json(err);
-  })
+  }).catch((err) => {res.json(err);
+  });
+  res.json(allProducts);
 });
 
 // get one product
@@ -43,16 +41,15 @@ router.get('/:id', async (req, res) => {
         attributes: ['tag_name']
       }
     ],
+  }).catch((err) => {res.json(err);
   });
-  res.json(productById).catch(err => {
-    console.log(err);
-    res.status(500).json(err);
-  })
+  res.json(productById);
 });
 
+
 // create new product
-router.post('/', async (req, res) => {
-  const newProduct = await Product.create(
+router.post('/', (req, res) => {
+  Product.create(
     {
       product_name: req.body.product_name,
       price: req.body.price,
@@ -60,11 +57,10 @@ router.post('/', async (req, res) => {
       category_id: req.body.category_id,
       tagIds: req.body.tagIds
     }
-  ).then(res.json(newProduct))
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    })
+  ).then((updatedProduct) => {
+    res.json(updatedProduct);
+  })
+  .catch((err) => res.json(err));
   
   /* req.body should look like this...
     {
@@ -93,8 +89,8 @@ router.post('/', async (req, res) => {
     .catch((err) => {
       console.log(err);
       res.status(400).json(err);
-    });
-});
+    })
+  });
 
 // update product
 router.put('/:id', (req, res) => {

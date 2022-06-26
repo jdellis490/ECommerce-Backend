@@ -13,11 +13,10 @@ router.get('/', async (req, res) => {
         attributes: ['product_name']
       }
     ],
+  }).catch((err) => {
+    res.json(err);
   });
-  res.json(allCategories).catch(err => {
-    console.log(err);
-    res.status(500).json(err);
-  })
+  res.json(allCategories);
 });
 
 
@@ -34,11 +33,10 @@ router.get('/:id', async (req, res) => {
         attributes: ['product_name']
       }
     ],
+  }).catch((err) => {
+    res.json(err);
   });
-  res.json(categoryByID).catch(err => {
-    console.log(err);
-    res.status(500).json(err);
-  })
+  res.json(categoryByID);
 });
 
 router.post('/', async (req, res) => {
@@ -46,22 +44,26 @@ router.post('/', async (req, res) => {
   const newCategory = await Category.create(
     {
       category_name: req.body.category_name,
-  }).then(res.json(newCategory))
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    })
+    }).catch((err) => {
+      res.json(err);
+    });
+  res.json(newCategory);
 });
 
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
-  Category.update(req.body, {
+  Category.update({
+    category_name: req.body.category_name,
+  },
+  {
     where: {
       id: req.params.id,
     },
-  }).then((updatedCategory) => {
+  })
+  .then((updatedCategory) => {
     res.json(updatedCategory);
-  }).catch((err) => res.json(err)); 
+  })
+  .catch((err) => res.json(err));
 });
 
 router.delete('/:id', (req, res) => {
@@ -70,9 +72,11 @@ router.delete('/:id', (req, res) => {
     where: {
       id: req.params.id
     },
-  }).then((deletedCategory) => {
+  })
+  .then((deletedCategory) => {
     res.json(deletedCategory);
-  }).catch((err) => res.json(err));
-});
-
+  }).catch((err) => { res.json(err);
+  });
+}); 
+  
 module.exports = router;
